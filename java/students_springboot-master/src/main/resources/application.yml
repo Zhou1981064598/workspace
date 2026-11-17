@@ -1,0 +1,43 @@
+# 服务端口
+server:
+  port: 8088
+
+spring:
+  main:
+#    删除bean之间的依赖循环
+    allow-circular-references: true
+  profiles:
+#    调用子yml配置文件，可选择dev本地测试配置文件，也可选择prod正式配置文件
+    active: dev
+#    配置静态模板
+  thymeleaf:
+    prefix: classpath:/templates/
+    mode: HTML5
+    suffix: .html
+    cache: false # 模板引擎的缓存
+  mvc:
+    static-path-pattern: /static/**
+
+  # jpa配置
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+
+mybatis-plus:
+  configuration:
+    #  打开执行SQL的日志（打印执行sql）
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 开启驼峰式命名规则
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      # 表名前缀 ，全局配置后可以省略@Table(name = "t_user")配置
+      table-prefix: t_
+      # 全局默认主键类型，设置后可以省略@TableId(type = IdType.AUTO)配置
+      id-type: auto
+  # mybatis mapper 对应的xml文件位置
+  mapper-locations: classpath:mapper/*.xml
+

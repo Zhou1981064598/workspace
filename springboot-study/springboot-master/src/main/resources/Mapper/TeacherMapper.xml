@@ -1,0 +1,118 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maven.springbootvue.Mapper.TeacherMapper">
+
+    <!-- 开启二级缓存-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+    <!-- Teacher Login(@Param("tno") String userID, @Param("password") String password); 登录验证-->
+    <select id="Login" resultType="teacher">
+        SELECT id,
+        tno,
+        name,
+        gender,
+        password,
+        email,
+        telephone,
+        address,
+        portrait_path,
+        clazz_name,
+        isdelete
+        FROM tb_teacher
+        WHERE tno = #{tno}
+        AND password = #{password}
+    </select>
+
+    <!-- Teacher getTeacher(@Param("tno") String userID);获取教师信息-->
+    <select id="getTeacher" resultType="teacher">
+        select * from tb_teacher where tno = #{tno}
+    </select>
+
+    <!-- int updatePassword(@Param("tno") String tno , @Param("password") String newPassword);-->
+    <update id="updatePassword">
+        update tb_teacher set password = #{password} where tno = #{tno}
+    </update>
+
+    <resultMap id="UserMap" type="com.maven.springbootvue.Dto.UserInfo">
+        <id property="id" column="id" />
+        <result property="userID" column="tno" />
+        <result property="name" column="name" />
+        <result property="telephone" column="telephone" />
+        <result property="email" column="email" />
+        <result property="address" column="address" />
+        <result property="portrait_path" column="portrait_path" />
+        <result property="isdelete" column="isdelete" />
+    </resultMap>
+
+
+    <!-- List<UserInfo> getTeachers(@Param("tno") String userID);-->
+    <select id="getTeachers" resultMap="UserMap">
+        select * from tb_teacher
+        <where>
+            <if test="tno !=null and tno!=''">
+                tno = #{tno}
+            </if>
+        </where>
+    </select>
+
+    <!-- Integer updateStatus(@Param("isdelete") Integer status, @Param("tno") String userID);-->
+    <update id="updateStatus">
+        update tb_teacher set isdelete = #{isdelete} where tno = #{tno}
+    </update>
+
+    <!-- Integer insertTeacherOne(UserInfo userInfo);-->
+    <insert id="insertTeacherOne">
+        insert into tb_teacher (id, tno, name, gender, password, telephone, email, address, portrait_path, isdelete)
+        values
+        (#{id}, #{userID}, #{name}, #{gender}, #{password}, #{telephone}, #{email}, #{address}, #{portrait_path}, #{isdelete} )
+    </insert>
+
+    <!-- Integer deleteTeacherOne(UserInfo userInfo);-->
+    <delete id="deleteTeacherOne">
+        delete from tb_teacher where tno = #{userID}
+    </delete>
+
+    <!-- Integer updateTeacherOne(UserInfo userInfo);-->
+    <update id="updateTeacherOne">
+        update tb_teacher
+        <trim prefix="set" suffixOverrides=",">
+            <if test="gender !=null and gender !=''">
+                gender = #{gender},
+            </if>
+            <if test="password !=null and password !=''">
+                password = #{password},
+            </if>
+            <if test="telephone !=null and telephone !=''">
+                telephone = #{telephone},
+            </if>
+            <if test="name !=null and name !=''">
+                name = #{name},
+            </if>
+            <if test="email !=null and email !=''">
+                email = #{email},
+            </if>
+            <if test="address !=null and address !=''">
+                address = #{address}
+            </if>
+        </trim>
+        where tno = #{userID}
+    </update>
+
+    <!-- List<Teacher> selectDynamic(TeacherDto teacher);-->
+    <select id="selectDynamic" resultType="teacher">
+        select * from tb_teacher
+        <where>
+            <if test="tno !=null and tno !=''">
+                tno = #{tno}
+            </if>
+            <if test="name !=null and name !=''">
+                and name = #{name}
+            </if>
+            <if test="gender !=null and gender !=''">
+                and gender = #{gender}
+            </if>
+        </where>
+    </select>
+
+</mapper>

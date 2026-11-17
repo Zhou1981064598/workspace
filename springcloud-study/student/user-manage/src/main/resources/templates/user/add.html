@@ -1,0 +1,36 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="layui-row" id="addDiv" style="display: none" th:fragment="add">
+    <form class="layui-form" action="" id="addForm" lay-filter="example">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="userName" lay-verify="required"
+                       lay-reqtext="用户名是必填项，岂能为空？" placeholder="请输入用户名"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input type="password" name="userPwd" lay-verify="pass" placeholder="请输入密码"
+                       autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">昵称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="nickName" lay-verify="required"
+                       lay-reqtext="昵称是必填项，岂能为空？" placeholder="请输入昵称"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 40%">
+            <div class="layui-btn-group">
+                <button class="layui-btn" lay-submit="" lay-filter="update_submit">提&ensp;交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重&ensp;置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</html>

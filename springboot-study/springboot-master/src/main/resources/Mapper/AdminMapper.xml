@@ -1,0 +1,98 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maven.springbootvue.Mapper.AdminMapper">
+    <!-- 开启二级缓存-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    <!--  Admin Login(@Param("tno") String userID, @Param("password") String password);登录验证-->
+    <select id="Login" resultType="admin">
+        SELECT id,
+        ano,
+        name,
+        gender,
+        password,
+        email,
+        telephone,
+        address,
+        portrait_path
+        FROM tb_admin
+        WHERE ano = #{username}
+        AND password = #{password}
+    </select>
+
+    <!-- Admin getAdmin(@Param("username") String userID);获取管理员信息-->
+    <select id="getAdmin" resultType="admin">
+        select * from tb_admin where ano = #{username}
+    </select>
+
+    <!-- Integer updatePassword(@Param("ano") String ano , @Param("password") String newPassword);修改密码-->
+    <update id="updatePassword">
+        update tb_admin set password = #{password} where ano = #{ano}
+    </update>
+
+
+    <resultMap id="UserMap" type="com.maven.springbootvue.Dto.UserInfo">
+        <id property="id" column="id" />
+        <result property="userID" column="ano" />
+        <result property="name" column="name" />
+        <result property="telephone" column="telephone" />
+        <result property="email" column="email" />
+        <result property="address" column="address" />
+        <result property="portrait_path" column="portrait_path" />
+        <result property="isdelete" column="isdelete" />
+    </resultMap>
+
+    <!-- List<Admin> getAdmins(@Param("ano") String userID);-->
+    <select id="getAdmins" resultMap="UserMap">
+        select * from tb_admin
+        <where>
+            <if test="ano !=null and ano!=''">
+                ano = #{ano}
+            </if>
+        </where>
+    </select>
+
+    <!-- Integer updateStatus(@Param("isdelete") Integer status, @Param("ano") String userID);-->
+    <update id="updateStatus">
+        update tb_admin set isdelete = #{isdelete} where ano = #{ano}
+    </update>
+
+    <!-- Integer insertAdminOne(UserInfo userInfo);-->
+    <insert id="insertAdminOne">
+        insert into tb_admin (id, ano, name, gender, password, telephone, email, address, portrait_path, isdelete)
+        values
+        (#{id}, #{userID}, #{name}, #{gender}, #{password}, #{telephone}, #{email}, #{address}, #{portrait_path}, #{isdelete} )
+    </insert>
+
+    <!-- Integer deleteAdminOne(UserInfo userInfo);-->
+    <delete id="deleteAdminOne">
+        delete from tb_admin
+        where ano = #{userID}
+    </delete>
+
+    <!-- 更新用户信息 Integer updateAdminOne(UserInfo userInfo);-->
+    <update id="updateAdminOne">
+        update tb_admin
+        <trim prefix="set" suffixOverrides=",">
+            <if test="gender !=null and gender !=''">
+                gender = #{gender},
+            </if>
+            <if test="password !=null and password !=''">
+                password = #{password},
+            </if>
+            <if test="telephone !=null and telephone !=''">
+                telephone = #{telephone},
+            </if>
+            <if test="name !=null and name !=''">
+                name = #{name},
+            </if>
+            <if test="email !=null and email !=''">
+                email = #{email},
+            </if>
+            <if test="address !=null and address !=''">
+                address = #{address}
+            </if>
+        </trim>
+        where ano = #{userID}
+    </update>
+</mapper>

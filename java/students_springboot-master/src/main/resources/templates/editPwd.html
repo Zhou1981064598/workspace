@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}">
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">原密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="userPwd" placeholder="请输入原密码" autocomplete="off" class="layui-input"
+                   lay-verify="required" lay-reqtext="原密码是必填项，岂能为空？">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">新密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="userNewPwd" id="newPwd" lay-verify="newPass" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">确认新密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="okPwd" lay-verify="okPass" placeholder="请输入确认密码" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">确认新密码与新密码填写一致</div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="subPwdBtn">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+</body>
+<script th:src="@{/static/js/jquery.js}"></script>
+<script th:src="@{/static/layui/layui.js}"></script>
+<script th:inline="none">
+    layui.use(['table', 'form'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var layer = layui.layer;
+        form.verify({
+            newPass: [
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ],
+            okPass: function (val) {
+                if(val==null || val===''){
+                    return "确认密码必填";
+                }
+                var newPwd=$('#newPwd').val();
+                if (newPwd!==val){
+                    return "新密码的两次填写不一致";
+                }
+            }
+        });
+        form.on('submit(subPwdBtn)',function (data) {
+            $.ajax({
+                type: "POST",
+                url: '/updatePwd',//后台接口地址
+                contentType: "application/json; charset=utf-8",//提交数据的格式为json
+                data: JSON.stringify(data.field),//格式化为json串
+                success: function (result) {
+                    if (result.code === 0) {
+                        //跳转到登录界面
+                        window.parent.location.href = "/login";
+                    } else {  //失败
+                        layer.alert(result.msg, {icon: 2, time:2000});
+                    }
+                }
+            });
+            return false;
+        })
+    });
+</script>
+</html>

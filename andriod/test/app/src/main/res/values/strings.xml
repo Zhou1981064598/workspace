@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">test</string>
+    <string name="text1">hello_world</string>
+    <string name="text2">密码</string>
+    <string name="submit">登录</string>
+    <string name="please_input_username">请输入用户名</string>
+    <string name="add">添加学生</string>
+    <string name="delete">删除学生</string>
+    <string name="please_input_password">请输入密码</string>
+    <string name="second">second</string>
+    <string name="back">返回</string>
+    <string name="checkbox">记住密码</string>
+    <string name="select">查询学生</string>
+    <string name="title">学生信息</string>
+    <string name="xuehao">学号：</string>
+    <string name="xingming">姓名：</string>
+    <string name="birthday">出生日期：</string>
+    <string name="entrancetime">入学时间：</string>
+    <string name="perphone">电话：</string>
+    <string name="politicalface">政治面貌：</string>
+    <string name="nativetext">籍贯：</string>
+    <string name="national">民族：</string>
+    <string name="xiugai">修改信息</string>
+    <string name="addimg">添加照片</string>
+    <string name="delete1">根据id删除学生</string>
+    <string name="select1">根据id查询学生</string>
+    <string name="save">保存</string>
+
+
+</resources>

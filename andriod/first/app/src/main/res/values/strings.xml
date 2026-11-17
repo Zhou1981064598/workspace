@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="add">添加</string>
+    <string name="remove">删除</string>
+    <string name="hello">你好</string>
+    <string name="contact">联系人</string>
+    <string name="second">second</string>
+    <string name="back">返回</string>
+    <string name="my_app">android APP</string>
+    <string name="edit">编辑</string>
+    <string name="left">left</string>
+    <string name="right">right</string>
+</resources>

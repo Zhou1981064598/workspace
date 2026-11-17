@@ -1,0 +1,46 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springbootvue?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 1234
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  devtools:
+    restart:
+      #开启热部署
+      enabled: true
+      #重启的根目录设置在此以应用整个项目
+      additional-paths: src/main/java
+  cache:
+    #配置ehcache的配置文件路径，默认开启一级缓存；使用缓存功能需要在Mapper文件使用<cache>
+    ehcache:
+      config: classpath:/ehcache.xml
+
+mybatis-plus:
+  mapper-locations: classpath:Mapper/*.xml
+  type-aliases-package: com.maven.springbootvue.Pojo
+  configuration:
+    map-underscore-to-camel-case: false   #mybatis-plus默认开启驼峰
+    #开二级缓存
+    cache-enabled: true
+  global-config:
+    db-config:
+      id-type: auto
+
+#springboot整合mybatis的分页插件(mybatis-plus也可以使用)，在内存进行limit分页截取
+#分页插件官网：https://pagehelper.github.io/docs/howtouse/
+pagehelper:
+  helperDialect: mysql  #分页插件会自动检测当前的数据库链接，自动选择合适的分页方式。你也可以配置helperDialect属性来指定分页插件使用哪个数据库
+  reasonable: true  #分页合理化参数，默认值为false。当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页。默认false 时，直接根据参数进行查询
+  supportMethodsArguments: true
+  params: count=countSql
+
+
+#shiro:
+
+

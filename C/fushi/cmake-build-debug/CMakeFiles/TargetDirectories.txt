@@ -1,0 +1,3 @@
+D:/workspace/C/fushi/cmake-build-debug/CMakeFiles/fushi.dir
+D:/workspace/C/fushi/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/workspace/C/fushi/cmake-build-debug/CMakeFiles/rebuild_cache.dir

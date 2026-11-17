@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maven.springbootvue.Mapper.StudentMapper">
+    <!-- 开启二级缓存-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+    <!-- Student Login(@Param("sno") String userID, @Param("password") String password); 登录验证-->
+    <select id="Login" resultType="student">
+        SELECT id,
+               sno,
+               name,
+               gender,
+               password,
+               portrait_path,
+               email,
+               telephone,
+               address,
+               introducation,
+               clazz_name,
+               isdelete
+        FROM tb_student
+        WHERE sno = #{sno} AND password = #{password}
+    </select>
+
+    <!-- Student getStudent(@Param("sno") String userID); 获取学生信息-->
+    <select id="getStudent" resultType="student">
+        select * from tb_student where sno = #{sno}
+    </select>
+
+    <!-- int updatePassword(@Param("sno") String sno, @Param("password") String newPassword);修改密码-->
+    <update id="updatePassword">
+        update tb_student set password = #{password} where sno = #{sno}
+    </update>
+
+
+    <resultMap id="UserMap" type="com.maven.springbootvue.Dto.UserInfo">
+        <id property="id" column="id" />
+        <result property="userID" column="sno" />
+        <result property="name" column="name" />
+        <result property="telephone" column="telephone" />
+        <result property="email" column="email" />
+        <result property="address" column="address" />
+        <result property="portrait_path" column="portrait_path" />
+        <result property="isdelete" column="isdelete" />
+    </resultMap>
+
+    <!-- List<UserInfo> getStudents(@Param("sno") String userID);-->
+    <select id="getStudents" resultMap="UserMap">
+        select * from tb_student
+        <where>
+            <if test="sno !=null and sno!=''">
+                sno = #{sno}
+            </if>
+        </where>
+    </select>
+
+    <!-- Integer updateStatus(@Param("isdelete") Integer status, @Param("sno") String userID);-->
+    <update id="updateStatus">
+        update tb_student set isdelete = #{isdelete} where sno = #{sno}
+    </update>
+
+    <!-- Integer insertStudentOne(UserInfo userInfo);-->
+    <insert id="insertStudentOne">
+        insert into tb_student (id, sno, name, gender, password, telephone, email, address, portrait_path, isdelete)
+        values
+        (#{id}, #{userID}, #{name}, #{gender}, #{password}, #{telephone}, #{email}, #{address}, #{portrait_path}, #{isdelete} )
+    </insert>
+
+    <!-- Integer deleteStudentOne(UserInfo userInfo);-->
+    <delete id="deleteStudentOne">
+        delete from tb_student where sno = #{userID}
+    </delete>
+
+    <!-- Integer updateStudentOne(UserInfo userInfo);-->
+    <update id="updateStudentOne">
+        update tb_student
+        <trim prefix="set" suffixOverrides=",">
+            <if test="gender !=null and gender !=''">
+                gender = #{gender},
+            </if>
+            <if test="password !=null and password !=''">
+                password = #{password},
+            </if>
+            <if test="telephone !=null and telephone !=''">
+                telephone = #{telephone},
+            </if>
+            <if test="name !=null and name !=''">
+                name = #{name},
+            </if>
+            <if test="email !=null and email !=''">
+                email = #{email},
+            </if>
+            <if test="address !=null and address !=''">
+                address = #{address}
+            </if>
+        </trim>
+        where sno = #{userID}
+    </update>
+
+    <!-- Integer updateClazzMore(@Param("students") List<Student> students);
+        通过与case when结合完成批量修改学生的班级信息（可以根据每个学生不同的信息划分到不同班级，一般批量都是分配到同一个班级）
+    -->
+    <update id="updateClazzMore">
+        update tb_student set
+        <foreach collection="students" item="student" open="clazz_name = case sno" close="end,">
+            when #{student.sno} then #{student.clazz_name}
+        </foreach>
+        <foreach collection="students" item="student" open="cno = case sno" close="end">
+            when #{student.sno} then #{student.cno}
+        </foreach>
+        where sno in 
+        <foreach collection="students" item="student" open="(" close=")" separator=",">
+            #{student.sno}
+        </foreach>
+    </update>
+
+    <!-- List<Student> selectDynamic(StudentDto studentDto);-->
+    <select id="selectDynamic" resultType="student">
+        select * from tb_student
+        <where>
+            <if test="sno !=null and sno !=''">
+                sno = #{sno}
+            </if>
+            <if test="name !=null and name !=''">
+                and name = #{name}
+            </if>
+            <if test="gender !=null and gender !=''">
+                and gender = #{gender}
+            </if>
+        </where>
+    </select>
+    
+    <!-- List<Student> selectByCno(@Param("cno") String cno);-->
+    <select id="selectByCno" resultType="student">
+        select * from tb_student
+        <where>
+            <choose>
+                <when test="cno !=null and cno !=''">
+                    cno = #{cno}
+                </when>
+                <when test="cno == null">
+                    cno is null and clazz_name is null
+                </when>
+            </choose>
+        </where>
+    </select>
+
+
+</mapper>

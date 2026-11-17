@@ -1,0 +1,53 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="layui-row" id="editDiv" style="display: none;" th:fragment="edit">
+    <form class="layui-form" action="" id="editForm" lay-filter="example">
+
+        <input type="hidden" name="id" id="id">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">学生姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="stuName" lay-verify="required" lay-reqtext="姓名是必填项，岂能为空？" placeholder="请输入姓名"
+                       autocomplete="off" class="layui-input">
+            </div>
+
+            <label class="layui-form-label">学号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="sno" placeholder="请输入学号" lay-verify="required" lay-reqtext="学号是必填项，岂能为空？"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">科目</label>
+            <div class="layui-input-inline">
+                <select name="subject" id="km">
+                    <option value="">请选择科目</option>
+                    <option th:each="sub : ${subList}" th:value="${sub.getId()}" th:text="${sub.getName()}"></option>
+                </select>
+            </div>
+
+            <label class="layui-form-label">科目成绩</label>
+            <div class="layui-input-inline">
+                <input type="number" name="score" lay-verify="required" lay-reqtext="科目成绩是必填项，岂能为空？"
+                       placeholder="请输入科目成绩" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">学期</label>
+            <div class="layui-input-inline">
+                <input type="text" name="syear" lay-verify="required" lay-reqtext="学期是必填项，岂能为空？"
+                       placeholder="请输入学期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-left: 40%">
+            <div class="layui-btn-group">
+                <button class="layui-btn" lay-submit="" lay-filter="update_submit">提&ensp;交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重&ensp;置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</html>

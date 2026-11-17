@@ -1,0 +1,36 @@
+{
+  "items": [
+    {
+      "type": "file",
+      "ctime": 1783346428825,
+      "path": "markdown练习.md"
+    },
+    {
+      "type": "group",
+      "ctime": 1792066806253,
+      "items": [
+        {
+          "type": "file",
+          "ctime": 1792066821754,
+          "path": "神经符号谓词的抽象世界模型用于机器人规划.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1792066840922,
+          "path": "通用规划.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1792066851254,
+          "path": "(广义规划的层次分解和终止分析笔记)Hierarchical Decompositions and Termination Analysis  for Generalized Planning.md"
+        },
+        {
+          "type": "file",
+          "ctime": 1792066861631,
+          "path": "CGDP中常见术语.md"
+        }
+      ],
+      "title": "通用规划"
+    }
+  ]
+}

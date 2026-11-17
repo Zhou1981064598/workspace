@@ -1,0 +1,56 @@
+# ---- Visual Studio / MSVC ----
+.vs/
+*.ipch
+*.sdf
+*.suo
+*.user
+*.db
+*.vsidx
+*.VC.db
+*.pdb
+*.ilk
+*.obj
+*.tlog
+*.idb
+x64/
+Debug/
+Release/
+
+# ---- 编译输出 ----
+bin/
+obj/
+target/
+build/
+dist/
+out/
+*.war
+*.jar
+*.class
+*.o
+*.exe
+*.dll
+
+# ---- 依赖 ----
+node_modules/
+.pnpm-store/
+
+# ---- 压缩包与镜像 ----
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.iso
+
+# ---- 日志与临时文件 ----
+*.log
+*.tmp
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# ---- 本地环境 ----
+.env
+.env.local
+.idea/
+.vscode/

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<form action="/Welcome/register" method="post" onsubmit="return Validate(this) ">
+    <label for="userAccount">
+        <input id="userAccount" type="text" name="userAccount"><span id="result"></span>
+    </label>
+
+    <label>
+        <input id="userPassword" type="password" name="userPassword">
+    </label>
+    <label>
+        <input id="userPassword_confirm" type="password" name="userPassword_confirm">
+    </label>
+
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script>
+    function Validate(form) {
+        if (form.userAccount === '') {
+            form.userAccount.focus();
+            return false
+        }
+        if (form.userPassword === '') {
+            form.userPassword.focus();
+            return false
+        }
+
+    }
+
+    $("#userAccount").on('blur', function () {
+        let account = document.getElementById("userAccount");
+        $.ajax({
+            type: "POST",
+            url: "/Welcome/accountValidate",
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify({"userAccount": $("#userAccount").val()}),
+            before: console.log("Sending message" + account.value),
+            success: function (r) {
+                console.log("success" + r);
+                if (r === false) {
+                    $('#result').text("√").css("color", "green")
+                } else {
+                    $('#result').text("X Account Exit").css("color", "red")
+                }
+            }
+        });
+    })
+</script>
+</html>

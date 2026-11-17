@@ -1,0 +1,11 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: jz1981064598
+    password: Jz123456
+    url: jdbc:mysql://rm-bp1ef11y1ys59327l6o.mysql.rds.aliyuncs.com:3306/zhou_test?serverTimezone=UTC
+mybatis:
+  mapper-locations: classpath:mapper/*
+  type-aliases-package: com.example.springboot02.entity

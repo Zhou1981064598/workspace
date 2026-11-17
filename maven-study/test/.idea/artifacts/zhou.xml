@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="zhou">
+    <output-path>$PROJECT_DIR$/out/artifacts/zhou</output-path>
+    <root id="archive" name="zhou.war" />
+  </artifact>
+</component>

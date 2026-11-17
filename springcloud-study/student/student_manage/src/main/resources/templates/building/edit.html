@@ -1,0 +1,66 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="layui-row" id="editDiv" style="display: none" th:fragment="edit">
+    <form class="layui-form" action="" id="editForm" lay-filter="example">
+
+        <input type="hidden" name="id" id="id">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">宿舍楼号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="buildingNum" lay-verify="required" lay-reqtext="宿舍楼号是必填项，岂能为空？"
+                       placeholder="请输入宿舍楼号"
+                       autocomplete="off" class="layui-input">
+            </div>
+
+            <label class="layui-form-label">宿舍楼层</label>
+            <div class="layui-input-inline">
+                <input type="text" name="floor" placeholder="请输入宿舍楼号" lay-verify="required" lay-reqtext="宿舍楼号是必填项，岂能为空？"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">宿舍房间号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="roomNum" lay-verify="required" lay-reqtext="宿舍房间号是必填项，岂能为空？"
+                       placeholder="请输入宿舍房间号" autocomplete="off" class="layui-input">
+            </div>
+            <label class="layui-form-label">宿舍类型</label>
+            <div class="layui-input-inline">
+                <select name="roomType">
+                    <option value="">请选择宿舍类型</option>
+                    <option value="1">单人间</option>
+                    <option value="2">双人间</option>
+                    <option value="4">四人间</option>
+                    <option value="6">六人间</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否有卫浴</label>
+            <div class="layui-input-inline">
+                <select name="isBathroom">
+                    <option value="">请选择</option>
+                    <option value="0">是</option>
+                    <option value="1">否</option>
+                </select>
+            </div>
+
+            <label class="layui-form-label">是否有空调</label>
+            <div class="layui-input-inline">
+                <select name="isAir">
+                    <option value="">请选择</option>
+                    <option value="0">是</option>
+                    <option value="1">否</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 40%">
+            <div class="layui-btn-group">
+                <button class="layui-btn" lay-submit="" lay-filter="update_submit">提&ensp;交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重&ensp;置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</html>

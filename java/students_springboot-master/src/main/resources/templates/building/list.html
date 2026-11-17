@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}">
+</head>
+<body>
+<div class="demoTable layui-form">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">宿舍楼层</label>
+            <div class="layui-input-inline">
+                <input type="text" name="floor" id="floor" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">宿舍房间号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="roomNum" id="roomNum" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <button class="layui-btn" data-type="reload">搜索</button>
+    </div>
+</div>
+<table class="layui-hide" id="bldTable" lay-filter="bld_bar"></table>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">
+            <i class="layui-icon">&#xe608;</i>新增
+        </button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<div th:replace="building/edit :: edit"></div>
+</body>
+<script th:src="@{/static/js/jquery.js}"></script>
+<script th:src="@{/static/layui/layui.js}"></script>
+<script th:src="@{/static/js/common.js}"></script>
+<script th:inline="none">
+    layui.use(['table', 'form'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var layer = layui.layer;
+        var index;
+        table.render({
+            elem: '#bldTable',//table标签里面的id属性
+            id: 'bldReload',//与搜索（查询）功能相关联的id值
+            url: '/building/list',//请求后台数据查询的url地址
+            toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
+            method: 'get',
+            cellMinWidth: 80, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            cols: [[
+                {field: 'id', title: 'ID', sort: true},
+                {field: 'buildingNum', title: '宿舍楼号'},
+                {field: 'floor', title: '宿舍楼层'},
+                {field: 'roomNum', title: '宿舍房间号'},
+                {field: 'roomType', title: '宿舍类型'},
+                {field: 'isBathroom', title: '是否独立卫浴', templet:function (d) {
+                        if(d.isBathroom===0){
+                            return "是";
+                        }else{
+                            return "否";
+                        }
+                    }},
+                {field: 'isAir', title: '是否有空调', templet:function (d) {
+                        if(d.isAir===0){
+                            return "是";
+                        }else{
+                            return "否";
+                        }
+                    }},
+                {fixed: 'right', title: '操作', align: 'center', toolbar: '#barDemo'}
+            ]],
+            page: true,//开启分页
+            limit: 10,//每页显示条数
+            limits: [10, 20, 30, 40]
+        });
+        var $ = layui.$, active = {
+            reload: function () {
+                //执行重载
+                table.reload('bldReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        floor: $("#floor").val(),
+                        roomNum: $("#roomNum").val()
+                    }
+                });
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        //toolbar头工具栏事件，user_bar是table标签中的lay-filter
+        table.on('toolbar(bld_bar)', function (obj) {
+            switch (obj.event) {
+                //add是button按钮找那个的lay-event
+                case 'add':
+                    index = layer.open({
+                        type: 1,//页面层
+                        title: '宿舍添加',
+                        content: $("#editDiv"),
+                        cancel: function(){
+                            //    右上角的关闭按钮
+                            $("#editForm")[0].reset();//清空表单数据
+                        }
+                    });
+                    break;
+
+            }
+        });
+        table.on('tool(bld_bar)', function (obj) {
+            var data = obj.data;
+            var id = data.id;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    $.ajax({
+                        type: "GET",
+                        url: '/building/del?id='+id,//后台接口地址
+                        // data: data.id,
+                        success: function (result) {
+                            if (result.code === 0) {
+                                obj.del();
+                                layer.close(index);
+                                layer.msg(result.msg, {icon: 1,time: 2000});
+                            } else {  //失败
+                                layer.alert(result.msg, {icon: 2}, function () {
+                                    layer.close(index);
+                                });
+                            }
+                        }
+                    })
+                });
+            } else if (obj.event === 'edit') {
+                index = layer.open({
+                    type: 1,//页面层
+                    title: '宿舍编辑',
+                    content: $('#editDiv'),
+                    success:function () {
+                        $('#editDiv').setForm(data);
+                        layui.form.render();  // 下拉框赋值
+                    },
+                    cancel: function(){
+                        //    右上角的关闭按钮
+                        $("#editForm")[0].reset();//清空表单数据
+                    }
+                });
+            }
+        });
+        //添加或者修改
+        form.on('submit(update_submit)', function (data) {
+            $.ajax({
+                type: "POST",
+                url: '/building/handling',//后台接口地址
+                contentType: "application/json; charset=utf-8",//提交数据的格式为json
+                data: JSON.stringify(data.field),//格式化为json串
+                // dataType: "json",//返回的result数据格式为json串
+                // data: form.val('example'),
+                success: function (result) {
+                    if (result.code === 0) {
+                        //成功后刷新父界面
+                        window.location.reload();
+                        layer.msg(result.msg, {icon: 1, time: 2000});
+                    } else {  //失败
+                        layer.alert(result.msg, {icon: 2}, function () {
+                            layer.close(index);
+                        });
+                    }
+                }
+            });
+            layer.close(index);//关闭弹出层
+            return false;
+    });
+    });
+</script>
+</html>

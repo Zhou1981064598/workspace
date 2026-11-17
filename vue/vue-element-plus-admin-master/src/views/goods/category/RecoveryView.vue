@@ -1,0 +1,219 @@
+<script setup>
+import TableComponent from "@/components/tables/TableComponent.vue";
+const module = import.meta.globEager("@/apis/goods/category.js");
+
+const column = {
+  id: {
+    label: "ID", // 表头显示文字
+    show: false, // 是否显示
+    editable: false, // 是否可编辑
+    fixed: false, // 表格的列是否固定：可选 true | false | left | right
+    sortable: true, // 是否可排序
+    type: "number", // 字段类型
+  },
+  name: {
+    label: "名称",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "text",
+  },
+  caption: {
+    label: "副标题",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "text",
+  },
+  description: {
+    label: "产品简介",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "text",
+  },
+  detail: {
+    label: "产品详情",
+    show: false,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "text",
+  },
+  saleCount: {
+    label: "销售量",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "number",
+  },
+  image: {
+    label: "主图",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "text",
+  },
+  gallery: {
+    label: "相册列表,以逗号分隔",
+    show: false,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "text",
+  },
+  price: {
+    label: "标准价格",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "number",
+  },
+  stock: {
+    label: "总库存数量",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "number",
+  },
+  specItems: {
+    label: "公共规格json数据",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "text",
+  },
+  paramItems: {
+    label: "公共属性json数据",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "text",
+  },
+  brandId: {
+    label: "品牌id",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "number",
+  },
+  templateId: {
+    label: "模板id",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "number",
+  },
+  category1Id: {
+    label: "一级分类id",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "number",
+  },
+  category2Id: {
+    label: "二级分类id",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "number",
+  },
+  category3Id: {
+    label: "三级分类id",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "number",
+  },
+  isHot: {
+    label: "是否人气商品",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "number",
+  },
+  isFresh: {
+    label: "是否新品推荐",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "number",
+  },
+  isOnSale: {
+    label: "是否上架",
+    show: true,
+    editable: true,
+    fixed: false,
+    sortable: true,
+    type: "number",
+  },
+  isDeleted: {
+    label: "是否删除",
+    show: true,
+    editable: false,
+    fixed: false,
+    sortable: true,
+    type: "select",
+    option: [
+      { label: "删除", value: true },
+      { label: "正常", value: false },
+    ],
+    // 参数 ： (row, column, cellValue, index)
+    formatter: (cellValue) => {
+      if (cellValue == true) {
+        return "删除";
+      } else {
+        return "正常";
+      }
+    },
+  },
+  createBy: {
+    label: "创建者",
+    show: true,
+    editable: false,
+    fixed: false,
+    sortable: true,
+  },
+  updateBy: {
+    label: "修改者",
+    show: true,
+    editable: false,
+    fixed: false,
+    sortable: true,
+  },
+  createTime: {
+    label: "创建时间",
+    show: true,
+    editable: false,
+    fixed: false,
+    sortable: true,
+  },
+  updateTime: {
+    label: "修改时间",
+    show: true,
+    editable: false,
+    fixed: false,
+    sortable: true,
+  },
+};
+</script>
+
+<template>
+  <TableComponent :module="module" :column="column" :recovery="true" />
+</template>

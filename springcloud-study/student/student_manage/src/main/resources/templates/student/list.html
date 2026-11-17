@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生管理</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}">
+</head>
+<body>
+<div class="demoTable layui-form">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="stuName" id="stuName" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">学号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="stuNo" id="stuNo" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <button class="layui-btn" data-type="reload">搜索</button>
+    </div>
+</div>
+<table class="layui-hide" id="stuTable" lay-filter="stu_bar"></table>
+<script type="text/html" id="sexTpl">
+    {{#  if(d.sex === 1){ }}
+    <span style="color: #F581B1;">女</span>
+    {{#  } else { }}
+    <span style="color: #0000FF;">男</span>
+    {{#  } }}
+</script>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">
+            <i class="layui-icon">&#xe608;</i>新增
+        </button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<div th:replace="student/edit :: edit"></div>
+</body>
+<script th:src="@{/static/js/jquery.js}"></script>
+<script th:src="@{/static/layui/layui.js}"></script>
+<script th:src="@{/static/js/common.js}"></script>
+<script th:inline="none">
+    layui.use(['table', 'form'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var layer = layui.layer;
+        var index;
+        table.render({
+            elem: '#stuTable',//table标签里面的id属性
+            id: 'stuReload',//与搜索（查询）功能相关联的id值
+            url: 'http://localhost:8089/students/list',//请求后台数据查询的url地址
+            toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
+            defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            method: 'get',
+            cellMinWidth: 80, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            cols: [[
+                {field: 'id', title: 'ID', sort: true},
+                {field: 'stuName', title: '学生姓名'},
+                {field: 'stuNo', title: '学号'},
+                {field: 'sex', title: '性别', templet: '#sexTpl', width:80},
+                {field: 'idCard', title: '身份证号', width:100, templet: function (val) {
+                        return val.idCard.substr(0,6)+"***"+val.idCard.substr(14,4);
+                    }
+                },
+                {field: 'stuTel', title: '电话'},
+                {field: 'stuEmail', title: '邮箱'},
+                {field: 'prov', title: '省'},
+                {field: 'city', title: '市'},
+                {field: 'address', title: '地址'},
+                {field: 'stuPeople', title: '民族'},
+                {title: '操作', toolbar: '#barDemo', fixed: 'right', align: 'center' }
+            ]],
+            page: true,//开启分页
+            limit: 10,//每页显示条数
+            limits: [10, 20, 30, 40]
+        });
+        var $ = layui.$, active = {
+            reload: function () {
+                //执行重载
+                table.reload('stuReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        stuName: $("#stuName").val(),
+                        stuNo: $("#stuNo").val()
+                    }
+                });
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+        //toolbar头工具栏事件，user_bar是table标签中的lay-filter
+        table.on('toolbar(stu_bar)', function (obj) {
+            switch (obj.event) {
+                //add是button按钮找那个的lay-event
+                case 'add':
+                    index = layer.open({
+                        type: 1,//页面层
+                        title: '学生添加',
+                        content: $("#editDiv"),
+                        cancel: function(){
+                            //    右上角的关闭按钮
+                            $("#editForm")[0].reset();//清空表单数据
+                        }
+                    });
+                    break;
+            }
+        });
+
+        //监听行工具事件
+        table.on('tool(stu_bar)', function (obj) {
+            var data = obj.data;
+            var id = data.id;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    $.ajax({
+                        type: "GET",
+                        url: 'http://localhost:8089/students/del?id='+id,//后台接口地址
+                        // data: data.id,
+                        success: function (result) {
+                            if (result.code === 0) {
+                                obj.del();
+                                layer.close(index);
+                                layer.msg(result.msg, {icon: 1,time: 2000});
+                            } else {  //失败
+                                layer.alert(result.msg, {icon: 2}, function () {
+                                    layer.close(index);
+                                });
+                            }
+                        }
+                    })
+                });
+            } else if (obj.event === 'edit') {
+                index = layer.open({
+                    type: 1,//页面层
+                    title: '学生编辑',
+                    content: $("#editDiv"),
+                    success:function () {
+                        $('#editDiv').setForm(data);
+                        layui.form.render();  // 下拉框赋值
+                    },
+                    cancel: function(){
+                        //    右上角的关闭按钮
+                        $("#editForm")[0].reset();//清空表单数据
+                    }
+                });
+            }
+        });
+
+        //自定义验证规则
+        form.verify({
+            idCard: function (value) {
+                //15位数字0-9   \d{15}
+                //18位数字      \d{18}
+                //17位数字和一个X或者x   \d{17}(\d|X|x)
+                var reg = /^(\d{15})|(\d{18})|(\d{17}(\d|X|x))$/;
+                if(!reg.test(value)){
+                    return "请输入正确的身份证号";
+                }
+            }
+
+        });
+        //添加或者修改
+        form.on('submit(update_submit)', function (data) {
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost:8089/students/handling',//后台接口地址
+                contentType: "application/json; charset=utf-8",//提交数据的格式为json
+                data: JSON.stringify(data.field),//格式化为json串
+                // dataType: "json",//返回的result数据格式为json串
+                // data: form.val('example'),
+                success: function (result) {
+                    if (result.code === 0) {
+                        //成功后刷新父界面
+                        window.location.reload();
+                        layer.msg(result.msg, {icon: 1, time: 2000});
+                    } else {  //失败
+                        layer.alert(result.msg, {icon: 2}, function () {
+                            layer.close(index);
+                        });
+                    }
+                }
+            });
+            layer.close(index);//关闭弹出层
+            return false;
+        });
+    });
+</script>
+</html>

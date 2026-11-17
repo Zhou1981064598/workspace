@@ -1,0 +1,9 @@
+﻿  test.c
+D:\workspace\C\Project1\Project1\test.c(21,3): warning C4133: “return”: 从“LinkList”到“LNode *”的类型不兼容
+D:\workspace\C\Project1\Project1\test.c(27,2): warning C4133: “return”: 从“LinkList”到“LNode *”的类型不兼容
+D:\workspace\C\Project1\Project1\test.c(25,11): warning C4133: “初始化”: 从“LNode *”到“LinkList”的类型不兼容
+D:\workspace\C\Project1\Project1\test.c(35,7): warning C4047: “=”:“LinkList”与“LinkList *”的间接级别不同
+D:\workspace\C\Project1\Project1\test.c(60,11): warning C4047: “初始化”:“LinkList”与“LinkList *”的间接级别不同
+D:\workspace\C\Project1\Project1\test.c(84,2): warning C4047: “return”:“int”与“int *”的间接级别不同
+D:\workspace\C\Project1\Project1\test.c(117,6): warning C4101: “C”: 未引用的局部变量
+  Project1.vcxproj -> D:\workspace\C\Project1\x64\Debug\Project1.exe

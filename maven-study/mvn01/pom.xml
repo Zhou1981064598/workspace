@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0   
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- 指定了当前POM模型的版本，对于Maven2及Maven 3来说，它只能是4.0.0 -->
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 是项目组织唯一的标识符，实际对应JAVA的包的结构，是main目录里java的目录结构，域名反写 -->
+    <groupId>cn.edu.gzu</groupId>
+    <!-- 项目的唯一的标识符，实际对应项目的名称，就是项目根目录的名称 -->
+    <artifactId>mvn01</artifactId>
+    <!-- 项目版本 -->
+    <version>1.0.1</version>
+   
+</project>

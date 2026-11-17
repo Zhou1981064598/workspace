@@ -1,0 +1,92 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="layui-row" id="editDiv" style="display: none" th:fragment="edit">
+    <form class="layui-form" action="" id="editForm" lay-filter="example">
+        
+        <input type="hidden" name="id" id="id">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">学生姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="stuName" lay-verify="required" lay-reqtext="姓名是必填项，岂能为空？" placeholder="请输入姓名"
+                       autocomplete="off" class="layui-input">
+            </div>
+
+            <label class="layui-form-label">学号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="stuNo" placeholder="请输入学号" lay-verify="required" lay-reqtext="学号是必填项，岂能为空？"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+
+            <label class="layui-form-label">身份证号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="idCard" lay-verify="required|idCard" lay-reqtext="身份证号是必填项，岂能为空？"
+                       placeholder="请输入身份证号" autocomplete="off" class="layui-input">
+            </div>
+
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="sex" value="0" title="男" checked="">
+                <input type="radio" name="sex" value="1" title="女">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">详细地址</label>
+            <div class="layui-input-inline">
+                <select name="prov">
+                    <option value="">请选择省</option>
+                    <option value="河北省">河北省</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select name="city">
+                    <option value="">请选择市</option>
+                    <option value="唐山市">唐山市</option>
+                    <option value="秦皇岛市">秦皇岛市</option>
+                    <option value="廊坊市">廊坊市</option>
+                    <option value="邯郸市">邯郸市</option>
+                    <option value="保定市">保定市</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" name="address" placeholder="请输入详细地址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">手机</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="stuTel" lay-verify="required|phone" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="stuEmail" lay-verify="email" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">民族</label>
+            <div class="layui-input-inline">
+                <select name="stuPeople">
+                    <option value="">请选择民族</option>
+                    <option value="Han">汉族</option>
+                    <option value="Manchu">满族</option>
+                    <option value="Uighur">维吾尔族</option>
+                    <option value="Hui">回族</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" style="margin-left: 40%">
+            <div class="layui-btn-group">
+                <button class="layui-btn" lay-submit="" lay-filter="update_submit">提&ensp;交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重&ensp;置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</html>

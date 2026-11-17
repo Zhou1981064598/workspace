@@ -1,0 +1,14 @@
+@import "./base.css";
+
+/* 导入暗黑模式主题 */
+@import "element-plus/theme-chalk/dark/css-vars.css";
+
+/* 自定义暗黑模式背景颜色 */
+html.dark {
+  --el-bg-color: #3d407a;
+}
+
+/* 暗黑模式下的样式 */
+@media (prefers-color-scheme: dark) {
+  
+}

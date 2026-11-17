@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.mapper.ScoreMapper">
+
+    <resultMap id="BaseResultMap" type="com.zhou.entity.bean.ScoreBean">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="stu_name" jdbcType="VARCHAR" property="stuName"/>
+        <result column="name" jdbcType="VARCHAR" property="sbjName"/>
+        <result column="score" jdbcType="DOUBLE" property="score"/>
+        <result column="sno" jdbcType="VARCHAR" property="sno"/>
+        <result column="subject" jdbcType="INTEGER" property="subject"/>
+        <result column="syear" jdbcType="VARCHAR" property="syear"/>
+    </resultMap>
+
+    <select id="selectScore" resultMap="BaseResultMap" parameterType="com.zhou.entity.vo.ScoreVo">
+        SELECT a.*, b.stu_name,c.`name`
+        FROM t_score AS a, t_student AS b, t_subject AS c
+        WHERE a.sno = b.stu_no AND c.id = a.`subject`
+        <if test="sno != null and sno != '' ">
+            and a.sno=#{sno}
+        </if>
+        <if test="subject != null and subject != '' ">
+            and a.subject=#{subject}
+        </if>
+    </select>
+</mapper>

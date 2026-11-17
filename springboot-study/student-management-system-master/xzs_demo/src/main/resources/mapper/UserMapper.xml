@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+    <!--List<Userinfo> login(Userinfo userinfo);-->
+    <select id="login" resultType="com.example.demo.model.Userinfo">
+        select *
+        from t_user
+        where user_name = #{user_name}
+    </select>
+    <!--List<Userinfo> paging(String userName, int role, int pageIndex, int pageSize);-->
+    <select id="paging" resultType="com.example.demo.model.Userinfo">
+        select * from t_user
+        <if test="cole==1">
+            where role = 1
+        </if>
+        limit #{pageOffset} , #{pageSize}
+    </select>
+</mapper>

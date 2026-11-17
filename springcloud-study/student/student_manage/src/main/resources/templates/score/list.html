@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生成绩管理</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}">
+</head>
+<body>
+<div class="demoTable layui-form">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">学号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="sno" id="stuNo" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">科目</label>
+            <div class="layui-input-inline">
+                <select name="id" id="km">
+                    <option value="">请选择科目</option>
+                    <option th:each="sub : ${subList}" th:value="${sub.getId()}" th:text="${sub.getName()}"></option>
+                </select>
+            </div>
+        </div>
+        <button class="layui-btn" data-type="reload">搜索</button>
+    </div>
+</div>
+<table class="layui-hide" id="scoreTable" lay-filter="score_bar"></table>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">
+            <i class="layui-icon">&#xe608;</i>新增
+        </button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon">&#xe640;</i>删除</a>
+</script>
+<div th:replace="score/edit :: edit"></div>
+</body>
+<script th:src="@{/static/js/jquery.js}"></script>
+<script th:src="@{/static/layui/layui.js}"></script>
+<script th:src="@{/static/js/common.js}"></script>
+<script th:inline="none">
+    layui.use(['table', 'form'], function () {
+        var table = layui.table;
+        var form = layui.form;
+        var layer = layui.layer;
+        var index;
+        table.render({
+            elem: '#scoreTable',//table标签里面的id属性
+            id: 'scoreReload',//与搜索（查询）功能相关联的id值
+            url: 'http://localhost:8089/score/list',//请求后台数据查询的url地址
+            toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
+            defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            method: 'get',
+            cellMinWidth: 80, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            cols: [[
+                {field: 'id', title: 'ID', sort: true},
+                {field: 'sno', title: '学号'},
+                {field: 'stuName', title: '姓名'},
+                {field: 'sbjName', title: '科目'},
+                {field: 'score', title: '成绩'},
+                {field: 'syear', title: '学期'},
+                {title: '操作', toolbar: '#barDemo', fixed: 'right', align: 'center'}
+            ]],
+            page: true,//开启分页
+            limit: 10,//每页显示条数
+            limits: [10, 20, 30, 40]
+        });
+        var $ = layui.$, active = {
+            reload: function () {
+                //执行重载
+                table.reload('scoreReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    },
+                    where: {
+                        sno: $("#stuNo").val(),
+                        subject: $("#km").val()
+                    }
+                });
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        table.on('toolbar(score_bar)', function (obj) {
+            switch (obj.event) {
+                //add是button按钮找那个的lay-event
+                case 'add':
+                    index = layer.open({
+                        type: 1,//页面层
+                        title: '成绩录入',
+                        content: $("#editDiv"),
+                        cancel: function(){
+                            //    右上角的关闭按钮
+                            $("#editForm")[0].reset();//清空表单数据
+                        }
+                    });
+                    break;
+            }
+        });
+        //监听行工具事件
+        table.on('tool(score_bar)', function (obj) {
+            var data = obj.data;
+            var id = data.id;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    $.ajax({
+                        type: "GET",
+                        url: 'http://localhost:8089/score/del?id='+id,//后台接口地址
+                        success: function (result) {
+                            if (result.code === 0) {
+                                obj.del();
+                                layer.close(index);
+                                layer.msg(result.msg, {icon: 1,time: 2000});
+                            } else {  //失败
+                                layer.alert(result.msg, {icon: 2}, function () {
+                                    layer.close(index);
+                                });
+                            }
+                        }
+                    })
+                });
+            } else if (obj.event === 'edit') {
+                index = layer.open({
+                    type: 1,//页面层
+                    title: '成绩修改',
+                    content: $("#editDiv"),
+                    success:function () {
+                        $('#editDiv').setForm(data);
+                        layui.form.render();  // 下拉框赋值
+                    },
+                    cancel: function(){
+                        //    右上角的关闭按钮
+                        $("#editForm")[0].reset();//清空表单数据
+                    }
+                });
+            }
+        });
+
+        //添加或者修改
+        form.on('submit(update_submit)', function (data) {
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost:8089/score/handling',//后台接口地址
+                contentType: "application/json; charset=utf-8",//提交数据的格式为json
+                data: JSON.stringify(data.field),//格式化为json串
+                success: function (result) {
+                    if (result.code === 0) {
+                        //成功后刷新父界面
+                        window.location.reload();
+                        layer.msg(result.msg, {icon: 1, time: 2000});
+                    } else {  //失败
+                        layer.alert(result.msg, {icon: 2}, function (index) {
+                            layer.close(index);
+                        });
+                    }
+                }
+            });
+            layer.close(index);//关闭弹出层
+            return false;
+        });
+    });
+</script>
+</html>

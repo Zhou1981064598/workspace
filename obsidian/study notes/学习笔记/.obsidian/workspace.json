@@ -1,0 +1,269 @@
+{
+  "main": {
+    "id": "4f34f49a141f549a",
+    "type": "split",
+    "children": [
+      {
+        "id": "51fc8ad9d5264abd",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f7a9b7c227797857",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "神经符号谓词的抽象世界模型用于机器人规划.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "神经符号谓词的抽象世界模型用于机器人规划"
+            }
+          },
+          {
+            "id": "b07ff0aab2f4f04d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "英语议论文作文模板.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "英语议论文作文模板"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c4872aaa96fd5fe7",
+    "type": "split",
+    "children": [
+      {
+        "id": "3e2a8e096e8a2c43",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1fb32db9b35660cb",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": true,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "1d8b323da3f4e173",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#效率工具",
+                "matchingCase": true,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": true,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "116cc052d0280f9c",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          },
+          {
+            "id": "43ddfe0aba01977e",
+            "type": "leaf",
+            "state": {
+              "type": "recent-files",
+              "state": {},
+              "icon": "clock",
+              "title": "Recent files"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "3074115397d9c617",
+    "type": "split",
+    "children": [
+      {
+        "id": "5a9fdc59a7012ac0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "19a202b6e1342d73",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "(广义规划的层次分解和终止分析笔记)Hierarchical Decompositions and Termination Analysis  for Generalized Planning.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              },
+              "icon": "links-coming-in",
+              "title": "反向链接"
+            }
+          },
+          {
+            "id": "ea9e37bf576ccc84",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "神经符号谓词的抽象世界模型用于机器人规划.md",
+                "linksCollapsed": true,
+                "unlinkedCollapsed": false
+              },
+              "icon": "links-going-out",
+              "title": "出链"
+            }
+          },
+          {
+            "id": "1f7c17955e4e1106",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "alphabetical",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "66183515e2b4bb24",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "b98a8d423e3b7603",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "神经符号谓词的抽象世界模型用于机器人规划.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "大纲"
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "horizontal",
+    "width": 305.7222900390625
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false,
+      "omnisearch:Omnisearch": false,
+      "zk-prefixer:创建时间戳笔记": false
+    }
+  },
+  "active": "b07ff0aab2f4f04d",
+  "lastOpenFiles": [
+    "神经符号谓词的抽象世界模型用于机器人规划.md",
+    "英语议论文作文模板.md",
+    "神经符号谓词的抽象世界模型用于机器人规划.zip",
+    "(广义规划的层次分解和终止分析笔记)Hierarchical Decompositions and Termination Analysis  for Generalized Planning.md",
+    "CGDP中常见术语.md",
+    "通用规划.md",
+    "markdown练习.md",
+    "神经符号谓词的抽象世界模型用于机器人规划/IMG-20261019181910668.png",
+    "通用规划/IMG-20261013185621455.png",
+    "神经符号谓词的抽象世界模型用于机器人规划",
+    "Clippings/第一次用Obsidian？先把这8个插件装好再说.md",
+    "Clippings/Obsidian文学笔记使用教程.md",
+    "逻辑.md",
+    "入学注意事项.md",
+    "enclosure/助学贷款合同 1.pdf",
+    "enclosure/image.md",
+    "是.md",
+    "AI工具.md",
+    "enclosure/Pasted image 20260706213101.png",
+    "Clippings",
+    "通用规划",
+    "通用规划1",
+    "新建文件夹/广义规划的层次分解和终止性分析.zip",
+    "新建文件夹/新建文件夹.zip",
+    "新建文件夹/enclosure/Pasted image 20260914141545.png",
+    "新建文件夹/enclosure/Pasted image 20260914162709.png",
+    "新建文件夹/enclosure/Pasted image 20260916144622.png",
+    "新建文件夹/enclosure/Pasted image 20260914141322.png",
+    "新建文件夹/enclosure/Pasted image 20260914141256.png",
+    "新建文件夹/enclosure/Pasted image 20260914141205.png",
+    "新建文件夹/enclosure/Pasted image 20260914140852.png",
+    "新建文件夹/enclosure/image.md",
+    "新建文件夹/enclosure",
+    "新建文件夹/(广义规划的层次分解和终止分析笔记)Hierarchical Decompositions and Termination Analysis  for Generalized Planning.md",
+    "新建文件夹",
+    "enclosure/Pasted.md",
+    "[enclosure/Pasted.md",
+    "入学注意事项 1.md",
+    "test.md",
+    "未命名 1.md",
+    "新建文件夹 (2)/test.md",
+    "未命名.canvas",
+    "baidu.md",
+    "id.md",
+    "无序列表.md",
+    "图片路径或URL.md",
+    "欢迎.md"
+  ]
+}

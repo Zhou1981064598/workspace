@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">camera</string>
+    <string name="select">选择相册照片</string>
+</resources>
